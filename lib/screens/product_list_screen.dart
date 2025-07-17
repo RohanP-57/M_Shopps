@@ -102,43 +102,21 @@ class _ProductListScreenState extends State<ProductListScreen> {
       ),
       body: Column(
         children: [
-          // Search and Filter Bar
           Container(
             padding: const EdgeInsets.all(16),
             color: Colors.white,
             child: Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search products...',
-                      prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
-                  ),
-                ),
                 const SizedBox(width: 12),
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey[300]!),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: IconButton(
-                    icon: const Icon(Icons.filter_list),
-                    onPressed: () {},
-                  ),
                 ),
               ],
             ),
           ),
-
-          // Products Grid
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(16),
@@ -161,16 +139,19 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Product Image
                       Expanded(
                         flex: 3,
                         child: Container(
                           width: double.infinity,
                           decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(12),
+                            ),
                           ),
                           child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(12),
+                            ),
                             child: Image.network(
                               product.imageUrl,
                               fit: BoxFit.cover,
@@ -188,8 +169,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           ),
                         ),
                       ),
-
-                      // Product Details
                       Expanded(
                         flex: 2,
                         child: Padding(
@@ -209,8 +188,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 4),
-
-                              // Price and Rating
                               Row(
                                 children: [
                                   Text(
@@ -224,18 +201,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                   const Spacer(),
                                   Row(
                                     children: [
-                                      const Icon(Icons.star, size: 14, color: Colors.amber),
+                                      const Icon(
+                                        Icons.star,
+                                        size: 14,
+                                        color: Colors.amber,
+                                      ),
                                       const Text(
                                         '4.5',
-                                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
                               const Spacer(),
-
-                              // Add to Cart / Quantity Controls
                               if (quantity == 0)
                                 SizedBox(
                                   width: double.infinity,
@@ -243,7 +225,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                   child: ElevatedButton(
                                     onPressed: () => _addToCart(product),
                                     style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                      ),
                                       textStyle: const TextStyle(fontSize: 12),
                                     ),
                                     child: const Text('Add to Cart'),
@@ -253,7 +237,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                 Container(
                                   height: 32,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: const Color(0xFFFF9900)),
+                                    border: Border.all(
+                                      color: const Color(0xFFFF9900),
+                                    ),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Row(
@@ -261,8 +247,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       InkWell(
                                         onTap: () => _decrement(product),
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                          child: const Icon(Icons.remove, size: 16),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          child: const Icon(
+                                            Icons.remove,
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       Expanded(
@@ -270,7 +262,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                           alignment: Alignment.center,
                                           decoration: const BoxDecoration(
                                             border: Border.symmetric(
-                                              vertical: BorderSide(color: Color(0xFFFF9900)),
+                                              vertical: BorderSide(
+                                                color: Color(0xFFFF9900),
+                                              ),
                                             ),
                                           ),
                                           child: Text(
@@ -285,8 +279,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       InkWell(
                                         onTap: () => _increment(product),
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                          child: const Icon(Icons.add, size: 16),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          child: const Icon(
+                                            Icons.add,
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                     ],

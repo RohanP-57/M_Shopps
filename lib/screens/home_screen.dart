@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        'Welcome to Amazon',
+                        'Welcome to Mini_Payment_app',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       const Text(
-                        'Discover millions of products at great prices',
+                        'Discover good products at great prices',
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: 18,
@@ -91,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: Colors.grey.withValues(alpha: 0.1),
                         spreadRadius: 1,
                         blurRadius: 4,
                         offset: const Offset(0, 2),

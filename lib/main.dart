@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'screens/checkout_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/product_list_screen.dart';
+import 'services/services.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocationService.instance.initialize();
+  
   runApp(const MyApp());
 }
 
@@ -15,7 +19,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Amazon-Style Shopping App',
       theme: ThemeData(
-        // Amazon color scheme
         primarySwatch: Colors.blue,
         primaryColor: const Color(0xFF232F3E), // Amazon dark blue
         scaffoldBackgroundColor: Colors.grey[50],

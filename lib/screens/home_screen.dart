@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'product_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,7 +13,14 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProductListScreen(),
+              ),
+            );
+          },
           child: const Text('Browse Products'),
         ),
       ),

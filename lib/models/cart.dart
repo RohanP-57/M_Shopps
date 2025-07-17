@@ -23,12 +23,8 @@ class Cart {
     }
   }
 
-  static void removeAllOf(Product product) {
+  static void remove(Product product) {
     _items.remove(product);
-  }
-
-  static void clear() {
-    _items.clear();
   }
 
   static int getQuantity(Product product) {
@@ -37,7 +33,21 @@ class Cart {
 
   static int get totalItems {
     int total = 0;
-    _items.forEach((_, qty) => total += qty);
+    for (var qty in _items.values) {
+      total += qty;
+    }
     return total;
+  }
+
+  static double get totalPrice {
+    double total = 0;
+    _items.forEach((product, qty) {
+      total += product.price * qty;
+    });
+    return total;
+  }
+
+  static void clear() {
+    _items.clear();
   }
 }

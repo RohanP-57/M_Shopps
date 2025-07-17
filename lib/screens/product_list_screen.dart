@@ -170,13 +170,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 5,
                         child: Padding(
                           padding: const EdgeInsets.all(12),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Product Name
                               Text(
                                 product.name,
                                 style: const TextStyle(
@@ -221,14 +220,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                               if (quantity == 0)
                                 SizedBox(
                                   width: double.infinity,
-                                  height: 32,
+                                  height: 30,
                                   child: ElevatedButton(
                                     onPressed: () => _addToCart(product),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
+                                        horizontal: 2,
                                       ),
-                                      textStyle: const TextStyle(fontSize: 12),
+                                      textStyle: const TextStyle(fontSize: 10),
                                     ),
                                     child: const Text('Add to Cart'),
                                   ),
@@ -306,10 +305,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
       ),
       floatingActionButton: Cart.totalItems > 0
           ? FloatingActionButton.extended(
-              onPressed: _goToCheckout,
-              icon: const Icon(Icons.shopping_cart),
-              label: Text('Cart (${Cart.totalItems})'),
-            )
+        onPressed: _goToCheckout,
+        icon: const Icon(Icons.shopping_cart),
+        label: Text('Cart (${Cart.totalItems})'),
+      )
           : null,
     );
   }

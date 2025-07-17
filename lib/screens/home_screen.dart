@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
         title: Row(
           children: [
             const Text(
-              'Mini_Payment_app',
+              'Mini_Shopping_app',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        'Welcome to Mini_Payment_app',
+                        'Welcome to Mini_Shopping_app',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,
@@ -65,7 +65,8 @@ class HomeScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () => Navigator.pushNamed(context, '/products'),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/products'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFFF9900),
                             padding: const EdgeInsets.symmetric(vertical: 16),

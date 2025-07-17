@@ -37,14 +37,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     try {
       _countries = await LocationService.instance.getCountries();
       _selectedCountry = 'India';
-      _availableStates = await LocationService.instance.getStatesForCountry('India');
+      _availableStates =
+      await LocationService.instance.getStatesForCountry('India');
       setState(() {
         _isLoading = false;
       });
     } catch (e) {
       _countries = LocationService.instance.getCountriesSync();
       _selectedCountry = 'India';
-      _availableStates = LocationService.instance.getStatesForCountrySync('India');
+      _availableStates =
+          LocationService.instance.getStatesForCountrySync('India');
       setState(() {
         _isLoading = false;
       });
@@ -57,16 +59,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       _selectedState = null;
       _availableStates = [];
     });
-    
+
     if (country != null) {
       try {
-        final states = await LocationService.instance.getStatesForCountry(country);
+        final states = await LocationService.instance.getStatesForCountry(
+            country);
         setState(() {
           _availableStates = states;
         });
       } catch (e) {
         setState(() {
-          _availableStates = LocationService.instance.getStatesForCountrySync(country);
+          _availableStates =
+              LocationService.instance.getStatesForCountrySync(country);
         });
       }
     }
@@ -81,15 +85,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         return;
       }
       String fullAddress =
-          "${_houseController.text}, ${_landmarkController.text}, ${_cityController.text}, $_selectedState, $_selectedCountry - ${_pincodeController.text}";
+          "${_houseController.text}, ${_landmarkController
+          .text}, ${_cityController
+          .text}, $_selectedState, $_selectedCountry - ${_pincodeController
+          .text}";
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SummaryScreen(
-            name: _nameController.text,
-            mobile: _mobileController.text,
-            address: fullAddress,
-          ),
+          builder: (context) =>
+              SummaryScreen(
+                name: _nameController.text,
+                mobile: _mobileController.text,
+                address: fullAddress,
+              ),
         ),
       );
     }
@@ -134,7 +142,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16, vertical: 12),
         ),
         validator: validator,
       ),
@@ -167,7 +176,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: 2, vertical: 12),
         ),
         items: items.map((String item) {
           return DropdownMenuItem<String>(
@@ -193,20 +203,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       body: _isLoading
           ? const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF9900)),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Loading location data...',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                ],
-              ),
-            )
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF9900)),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Loading location data...',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          ],
+        ),
+      )
           : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +241,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.shopping_cart, color: Color(0xFFFF9900), size: 24),
+                      Icon(Icons.shopping_cart, color: Color(0xFFFF9900),
+                          size: 24),
                       SizedBox(width: 8),
                       Text(
                         "Order Summary",
@@ -249,87 +260,107 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: cartItems.length,
-                    separatorBuilder: (context, index) => const Divider(height: 1),
+                    separatorBuilder: (context, index) =>
+                    const Divider(height: 1),
                     itemBuilder: (context, index) {
                       final product = cartItems[index].key;
                       final quantity = cartItems[index].value;
 
                       return Container(
                         padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                product.imageUrl,
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    width: 60,
-                                    height: 60,
-                                    color: Colors.grey[200],
-                                    child: const Icon(Icons.image_not_supported),
-                                  );
-                                },
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  product.imageUrl,
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      width: 60,
+                                      height: 60,
+                                      color: Colors.grey[200],
+                                      child: const Icon(
+                                          Icons.image_not_supported),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
+                              const SizedBox(width: 12),
+                              Container(
+                                constraints: BoxConstraints(
+                                  minWidth: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.3,
+                                  maxWidth: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.5,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '₹${product.price.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '₹${product.price.toStringAsFixed(2)}',
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[300]!),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  InkWell(
-                                    onTap: () => _decrement(product),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      child: const Icon(Icons.remove, size: 16),
+                              const SizedBox(width: 12),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey[300]!),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
+                                      onTap: () => _decrement(product),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Icon(
+                                            Icons.remove, size: 16),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                    child: Text('$quantity', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                  ),
-                                  InkWell(
-                                    onTap: () => _increment(product),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      child: const Icon(Icons.add, size: 16),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 8),
+                                      child: Text('$quantity',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                     ),
-                                  ),
-                                ],
+                                    InkWell(
+                                      onTap: () => _increment(product),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Icon(Icons.add, size: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -359,7 +390,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   children: [
                     const Row(
                       children: [
-                        Icon(Icons.location_on, color: Color(0xFFFF9900), size: 24),
+                        Icon(Icons.location_on, color: Color(0xFFFF9900),
+                            size: 24),
                         SizedBox(width: 8),
                         Text(
                           "Delivery Address",
@@ -372,11 +404,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    
+
                     _buildTextField(
                       controller: _nameController,
                       label: "Full Name",
-                      validator: (value) => value == null || value.isEmpty ? "Enter your name" : null,
+                      validator: (value) =>
+                      value == null || value.isEmpty
+                          ? "Enter your name"
+                          : null,
                     ),
 
                     _buildTextField(
@@ -384,7 +419,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       label: "Mobile Number",
                       keyboardType: TextInputType.phone,
                       validator: (value) {
-                        if (value == null || value.isEmpty) return "Enter mobile number";
+                        if (value == null || value.isEmpty)
+                          return "Enter mobile number";
                         if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
                           return "Enter a valid 10-digit number";
                         }
@@ -395,19 +431,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     _buildTextField(
                       controller: _houseController,
                       label: "House/Flat Number",
-                      validator: (value) => value == null || value.isEmpty ? "Enter house/flat number" : null,
+                      validator: (value) =>
+                      value == null || value.isEmpty
+                          ? "Enter house/flat number"
+                          : null,
                     ),
 
                     _buildTextField(
                       controller: _landmarkController,
                       label: "Landmark / Area",
-                      validator: (value) => value == null || value.isEmpty ? "Enter area or landmark" : null,
+                      validator: (value) =>
+                      value == null || value.isEmpty
+                          ? "Enter area or landmark"
+                          : null,
                     ),
 
                     _buildTextField(
                       controller: _cityController,
                       label: "City/District/Town",
-                      validator: (value) => value == null || value.isEmpty ? "Enter city" : null,
+                      validator: (value) =>
+                      value == null || value.isEmpty
+                          ? "Enter city"
+                          : null,
                     ),
 
                     _buildDropdown(
@@ -421,7 +466,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       label: "State",
                       value: _selectedState,
                       items: _availableStates,
-                      onChanged: (value) => setState(() => _selectedState = value),
+                      onChanged: (value) =>
+                          setState(() => _selectedState = value),
                     ),
 
                     _buildTextField(
@@ -429,7 +475,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       label: "Pincode",
                       keyboardType: TextInputType.number,
                       validator: (value) {
-                        if (value == null || value.isEmpty) return "Enter pincode";
+                        if (value == null || value.isEmpty)
+                          return "Enter pincode";
                         if (value.length < 5) return "Enter valid pincode";
                         return null;
                       },
@@ -460,7 +507,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     children: [
                       const Text(
                         "Total Amount:",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "₹${Cart.totalPrice.toStringAsFixed(2)}",
@@ -488,7 +536,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                       child: const Text(
                         "Proceed to Checkout",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Amazon-Style Shopping App',
+      title: 'Mini Shopping App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: const Color(0xFF232F3E), // Amazon dark blue

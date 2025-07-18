@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'screens/checkout_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/product_list_screen.dart';
+import 'screens/auth_screen.dart';
+import 'screens/auth_wrapper.dart';
 import 'services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Firebase temporarily disabled for web compatibility
+  // await Firebase.initializeApp();
   await LocationService.instance.initialize();
   
   runApp(const MyApp());
@@ -76,9 +80,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const AuthWrapper(),
+        '/home': (context) => const HomeScreen(),
         '/products': (context) => const ProductListScreen(),
         '/checkout': (context) => const CheckoutScreen(),
+        '/auth': (context) => const AuthScreen(),
       },
     );
   }

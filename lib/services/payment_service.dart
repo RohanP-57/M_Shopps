@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/cart.dart';
 import '../screens/order_confirmation_screen.dart';
+import 'firestore_service.dart';
 
 class PaymentService {
   static PaymentService? _instance;
@@ -25,7 +26,7 @@ class PaymentService {
   }) async {
     final confirmed = await _showCODDialog(context);
     if (confirmed == true) {
-      _navigateToOrderConfirmation(context, 'Cash on Delivery', 'Pending', 
+      await _navigateToOrderConfirmation(context, 'Cash on Delivery', 'Pending', 
         name: name, mobile: mobile, address: address);
     }
   }
@@ -300,7 +301,7 @@ class PaymentService {
     if (context.mounted) {
       Navigator.of(context).pop();
 
-      _navigateToOrderConfirmation(context, 'UPI Payment', 'Paid',
+      await _navigateToOrderConfirmation(context, 'UPI Payment', 'Paid',
         name: name, mobile: mobile, address: address);
     }
   }
@@ -334,20 +335,46 @@ class PaymentService {
     await Future.delayed(const Duration(seconds: 2));
     if (context.mounted) {
       Navigator.of(context).pop();
-      _navigateToOrderConfirmation(context, 'Razorpay', 'Paid',
+      await _navigateToOrderConfirmation(context, 'Razorpay', 'Paid',
         name: name, mobile: mobile, address: address);
     }
   }
 
-  void _navigateToOrderConfirmation(
+  Future<void> _navigateToOrderConfirmation(
     BuildContext context,
     String paymentMethod,
     String orderStatus, {
     required String name,
     required String mobile,
     required String address,
-  }) {
+  }) async {
     final orderId = 'ORD${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
+    
+    // Save order to Firebase
+    try {
+      final deliveryAddress = {
+        'name': name,
+        'mobile': mobile,
+        'address': address,
+      };
+
+      final savedOrderId = await FirestoreService().saveOrder(
+        items: Cart.items.entries.map((entry) => CartItem(
+          product: entry.key,
+          quantity: entry.value,
+        )).toList(),
+        totalAmount: Cart.totalPrice,
+        deliveryAddress: deliveryAddress,
+        locationId: 'default_location', // You can make this dynamic based on user selection
+      );
+
+      if (savedOrderId != null) {
+        print('Order saved to Firebase with ID: $savedOrderId');
+      }
+    } catch (e) {
+      print('Error saving order to Firebase: $e');
+      // Continue with local order confirmation even if Firebase fails
+    }
     
     Navigator.push(
       context,

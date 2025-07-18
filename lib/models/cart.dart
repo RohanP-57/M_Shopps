@@ -1,5 +1,15 @@
 import 'product.dart';
 
+class CartItem {
+  final Product product;
+  final int quantity;
+
+  CartItem({
+    required this.product,
+    required this.quantity,
+  });
+}
+
 class Cart {
   static final Map<Product, int> _items = {};
 

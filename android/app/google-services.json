@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "522538324529",
+    "project_id": "minishoppingapp-c51e6",
+    "storage_bucket": "minishoppingapp-c51e6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522538324529:android:37775a1d001f16c1d13b10",
+        "android_client_info": {
+          "package_name": "com.example.mini_payment_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522538324529-b8396j103rd17215ckjlorpu1ofovdvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mini_payment_app",
+            "certificate_hash": "13ff61ef28f4d291a46c3555ca05ad28bbff7417"
+          }
+        },
+        {
+          "client_id": "522538324529-98jtd4uamtkcqqomiu2g1ph5u9epam5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDycI-Cy0P1QkgEKSU7e-sjY6GVGGWWuyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522538324529-98jtd4uamtkcqqomiu2g1ph5u9epam5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

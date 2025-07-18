@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'screens/checkout_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/product_list_screen.dart';
+import 'screens/auth_screen.dart';
+import 'screens/auth_wrapper.dart';
 import 'services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
   await LocationService.instance.initialize();
   
   runApp(const MyApp());
@@ -20,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Mini Shopping App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        primaryColor: const Color(0xFF232F3E), // Amazon dark blue
+        primaryColor: const Color(0xFF232F3E),
         scaffoldBackgroundColor: Colors.grey[50],
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF232F3E),
@@ -35,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF9900), // Amazon orange
+            backgroundColor: const Color(0xFFFF9900),
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -76,9 +84,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const AuthWrapper(),
+        '/home': (context) => const HomeScreen(),
         '/products': (context) => const ProductListScreen(),
         '/checkout': (context) => const CheckoutScreen(),
+        '/auth': (context) => const AuthScreen(),
       },
     );
   }

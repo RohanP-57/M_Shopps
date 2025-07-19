@@ -42,16 +42,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const PopupMenuItem<String>(
-                  value: 'orders',
-                  child: Row(
-                    children: [
-                      Icon(Icons.shopping_bag, color: Colors.grey),
-                      SizedBox(width: 8),
-                      Text('My Orders'),
-                    ],
-                  ),
-                ),
-                const PopupMenuItem<String>(
                   value: 'logout',
                   child: Row(
                     children: [

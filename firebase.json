@@ -1,1 +1,36 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"minishoppingapp-c51e6","appId":"1:522538324529:android:37775a1d001f16c1d13b10","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"minishoppingapp-c51e6","configurations":{"android":"1:522538324529:android:37775a1d001f16c1d13b10","web":"1:522538324529:web:a364a1cbc0600a09d13b10"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "minishoppingapp-c51e6",
+          "appId": "1:522538324529:android:37775a1d001f16c1d13b10",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "minishoppingapp-c51e6",
+          "configurations": {
+            "android": "1:522538324529:android:37775a1d001f16c1d13b10",
+            "web": "1:522538324529:web:a364a1cbc0600a09d13b10"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

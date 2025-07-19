@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,33 +18,57 @@ class AuthService {
   Future<UserCredential?> signInWithGoogle() async {
     try {
       print('Starting Google Sign-In...');
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        print('Google Sign-In was cancelled by user');
-        return null;
-      }
-
-      print('Google user obtained: ${googleUser.email}');
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      print('Google auth tokens obtained');
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      print('Firebase credential created');
-      final userCredential = await _auth.signInWithCredential(credential);
-      print('Firebase sign-in successful: ${userCredential.user?.email}');
-      if (userCredential.user != null) {
-        try {
-          await _createOrUpdateUser(userCredential.user!);
-          print('User document created/updated in Firestore');
-        } catch (firestoreError) {
-          print('Error creating/updating user in Firestore: $firestoreError');
+      
+      // For web, use Firebase Auth directly with Google provider
+      if (kIsWeb) {
+        print('Using web-specific Google Sign-In');
+        final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        googleProvider.addScope('email');
+        googleProvider.addScope('profile');
+        
+        final userCredential = await _auth.signInWithPopup(googleProvider);
+        print('Web Google Sign-In successful: ${userCredential.user?.email}');
+        
+        if (userCredential.user != null) {
+          try {
+            await _createOrUpdateUser(userCredential.user!);
+            print('User document created/updated in Firestore');
+          } catch (firestoreError) {
+            print('Error creating/updating user in Firestore: $firestoreError');
+          }
         }
-      }
+        
+        return userCredential;
+      } else {
+        // For mobile platforms, use the existing Google Sign-In flow
+        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+        if (googleUser == null) {
+          print('Google Sign-In was cancelled by user');
+          return null;
+        }
 
-      return userCredential;
+        print('Google user obtained: ${googleUser.email}');
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        print('Google auth tokens obtained');
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        print('Firebase credential created');
+        final userCredential = await _auth.signInWithCredential(credential);
+        print('Firebase sign-in successful: ${userCredential.user?.email}');
+        if (userCredential.user != null) {
+          try {
+            await _createOrUpdateUser(userCredential.user!);
+            print('User document created/updated in Firestore');
+          } catch (firestoreError) {
+            print('Error creating/updating user in Firestore: $firestoreError');
+          }
+        }
+
+        return userCredential;
+      }
     } catch (e) {
       print('Error signing in with Google: $e');
       print('Error type: ${e.runtimeType}');

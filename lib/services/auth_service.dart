@@ -8,23 +8,15 @@ class AuthService {
     scopes: ['email', 'profile'],
   );
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // Auth state changes stream
   Stream<User?> get authStateChanges => _auth.authStateChanges();
-
-  // Current user
   User? get currentUser {
     final user = _auth.currentUser;
     print('Current user: ${user?.email ?? 'null'}');
     return user;
   }
-
-  // Sign in with Google
   Future<UserCredential?> signInWithGoogle() async {
     try {
       print('Starting Google Sign-In...');
-      
-      // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
         print('Google Sign-In was cancelled by user');
@@ -32,31 +24,22 @@ class AuthService {
       }
 
       print('Google user obtained: ${googleUser.email}');
-
-      // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       print('Google auth tokens obtained');
-
-      // Create a new credential
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       print('Firebase credential created');
-
-      // Sign in with credential
       final userCredential = await _auth.signInWithCredential(credential);
       print('Firebase sign-in successful: ${userCredential.user?.email}');
-
-      // Create/update user document in Firestore
       if (userCredential.user != null) {
         try {
           await _createOrUpdateUser(userCredential.user!);
           print('User document created/updated in Firestore');
         } catch (firestoreError) {
           print('Error creating/updating user in Firestore: $firestoreError');
-          // Continue even if Firestore fails - user is still authenticated
         }
       }
 
@@ -72,32 +55,26 @@ class AuthService {
       return null;
     }
   }
-
-  // Create or update user in Firestore
   Future<void> _createOrUpdateUser(User user) async {
     try {
       print('Creating/updating user: ${user.uid}');
       final userDoc = _firestore.collection('users').doc(user.uid);
-      
-      // Check if user exists
       final docSnapshot = await userDoc.get();
       print('User document exists: ${docSnapshot.exists}');
       
       if (docSnapshot.exists) {
-        // Update existing user
         await userDoc.update({
           'displayName': user.displayName ?? 'Unknown',
           'email': user.email ?? 'unknown@email.com',
         });
         print('User document updated');
       } else {
-        // Create new user with your exact schema structure
         final userData = {
           'displayName': user.displayName ?? 'Unknown',
           'email': user.email ?? 'unknown@email.com',
           'username': _generateUsername(user.displayName ?? 'user'),
           'createdAt': FieldValue.serverTimestamp(),
-          'addresses': <Map<String, dynamic>>[], // Empty list of addresses
+          'addresses': <Map<String, dynamic>>[],
         };
         
         print('Creating user document with data: $userData');
@@ -110,14 +87,11 @@ class AuthService {
       rethrow;
     }
   }
-
-  // Generate username from display name
   String _generateUsername(String displayName) {
     final username = displayName.toLowerCase().replaceAll(' ', '_');
     return '${username}_${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
   }
 
-  // Manually create user document for already authenticated user
   Future<bool> createUserDocumentManually() async {
     if (currentUser == null) return false;
     
@@ -141,13 +115,10 @@ class AuthService {
       return false;
     }
   }
-
-  // Update username
   Future<bool> updateUsername(String username) async {
     if (currentUser == null) return false;
     
     try {
-      // First ensure user document exists
       await createUserDocumentManually();
       
       await _firestore.collection('users').doc(currentUser!.uid).update({
@@ -160,7 +131,6 @@ class AuthService {
     }
   }
 
-  // Get user data
   Future<DocumentSnapshot?> getUserData() async {
     if (currentUser == null) return null;
     
@@ -172,7 +142,6 @@ class AuthService {
     }
   }
 
-  // Sign out
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();

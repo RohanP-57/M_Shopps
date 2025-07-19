@@ -350,17 +350,44 @@ class PaymentService {
     required String address,
   }) async {
     final orderId = 'ORD${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
-    
-    // Save order to Firebase
     try {
+      print('💳 PAYMENT: Starting order save process...');
       final currentUser = AuthService().currentUser;
+      print('💳 PAYMENT: Current user: ${currentUser?.uid ?? 'NULL'}');
+      
       if (currentUser != null) {
+        print('💳 PAYMENT: User authenticated, proceeding with order save...');
+        final addressParts = address.split(', ');
+        final street = addressParts.isNotEmpty ? addressParts[0] : address;
+        final city = addressParts.length > 2 ? addressParts[2] : 'Unknown';
+        final state = addressParts.length > 3 ? addressParts[3] : 'Unknown';
+        final zipCode = addressParts.isNotEmpty ? 
+          addressParts.last.replaceAll(RegExp(r'[^0-9]'), '') : '00000';
+        await FirestoreService().saveUserAddressAndMobile(
+          userId: currentUser.uid,
+          name: name,
+          mobile: mobile,
+          street: street,
+          city: city,
+          state: state,
+          zipCode: zipCode.isNotEmpty ? zipCode : '00000',
+          paymentMethod: paymentMethod,
+        );
+
         final deliveryAddress = {
           'name': name,
           'mobile': mobile,
           'address': address,
+          'city': city,
+          'state': state,
+          'zipCode': zipCode.isNotEmpty ? zipCode : '00000',
         };
 
+        print('💳 PAYMENT: About to call FirestoreService().createOrder()...');
+        print('💳 PAYMENT: Cart items count: ${Cart.items.entries.length}');
+        print('💳 PAYMENT: Total amount: ${Cart.totalPrice}');
+        print('💳 PAYMENT: Payment method: $paymentMethod');
+        
         final savedOrderId = await FirestoreService().createOrder(
           userId: currentUser.uid,
           deliveryAddress: deliveryAddress,
@@ -369,11 +396,11 @@ class PaymentService {
           paymentMethod: paymentMethod,
         );
 
-        print('Order saved to Firebase with ID: $savedOrderId');
+        print('💳 PAYMENT: ✅ Order saved to Firebase with ID: $savedOrderId');
+        print('User address and mobile saved to users collection');
       }
     } catch (e) {
       print('Error saving order to Firebase: $e');
-      // Continue with local order confirmation even if Firebase fails
     }
     
     Navigator.push(

@@ -4,20 +4,19 @@ A modern Flutter e-commerce application with Firebase integration, featuring Goo
 
 ## 📱 Screenshots
 
-(screenshots/ss(1).png)
-(screenshots/ss(2).png)
-(screenshots/ss(3).png)
-(screenshots/ss(4).png)
-(screenshots/ss(5).png)
-(screenshots/ss(6).png)
-(screenshots/ss(7).png)
-(screenshots/ss(8).png)
-(screenshots/ss(9).png)
-(screenshots/ss(10).png)
-(screenshots/ss(11).png)
-(screenshots/ss(12).png)
-(screenshots/ss(13).png)
-
+(screenshots/ss1.png)
+(screenshots/ss2.png)
+(screenshots/ss3.png)
+(screenshots/ss4.png)
+(screenshots/ss5.png)
+(screenshots/ss6.png)
+(screenshots/ss7.png)
+(screenshots/ss8.png)
+(screenshots/ss9.png)
+(screenshots/ss10.png)
+(screenshots/ss11.png)
+(screenshots/ss12.png)
+(screenshots/ss13.png)
 
 ## ✨ Features
 
@@ -170,6 +169,8 @@ lib/
    - Select your Firebase project
    - Choose platforms (Android, iOS, Web)
    - This will generate `firebase_options.dart`
+   
+   > **⚠️ Security Note:** The `firebase_options.dart` file contains sensitive API keys and is excluded from version control. You must generate your own Firebase configuration.
 
 5. **Configure Google Sign-In**
    - Get SHA-1 fingerprint: `cd android && ./gradlew signingReport`

@@ -2,22 +2,6 @@
 
 A modern Flutter e-commerce application with Firebase integration, featuring Google authentication, real-time order management, and multiple payment options.
 
-## 📱 Screenshots
-
-![](screenshots/ss1.png) 
-![](screenshots/ss2.png)
-![](screenshots/ss3.png)
-![](screenshots/ss4.png)
-![](screenshots/ss5.png)
-![](screenshots/ss6.png)
-![](screenshots/ss7.png)
-![](screenshots/ss8.png)
-![](screenshots/ss9.png)
-![](screenshots/ss10.png)
-![](screenshots/ss11.png)
-![](screenshots/ss12.png)
-![](screenshots/ss13.png)
-
 ## ✨ Features
 
 ### 🔐 Authentication
@@ -83,3 +67,19 @@ lib/
 ├── firebase_options.dart      # Firebase configuration
 └── main.dart                  # App entry point
 ```
+
+## 📱 Screenshots
+
+![](screenshots/ss1.png) 
+![](screenshots/ss2.png)
+![](screenshots/ss4.png)
+![](screenshots/ss5.png)
+![](screenshots/ss6.png)
+![](screenshots/ss7.png)
+![](screenshots/ss8.png)
+![](screenshots/ss12.png)
+![](screenshots/ss13.png)
+![](screenshots/ss3.png)
+![](screenshots/ss9.png)
+![](screenshots/ss10.png)
+![](screenshots/ss11.png)

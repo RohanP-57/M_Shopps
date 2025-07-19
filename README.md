@@ -4,20 +4,21 @@ A modern Flutter e-commerce application with Firebase integration, featuring Goo
 
 ## 📱 Screenshots
 
-(screenshots/ss(1).png)
-(screenshots/ss(2).png)
-(screenshots/ss(3).png)
-(screenshots/ss(4).png)
-(screenshots/ss(5).png)
-(screenshots/ss(6).png)
-(screenshots/ss(7).png)
-(screenshots/ss(8).png)
-(screenshots/ss(9).png)
-(screenshots/ss(10).png)
-(screenshots/ss(11).png)
-(screenshots/ss(12).png)
-(screenshots/ss(13).png)
-
+<p align="center">
+  <img src="screenshots/ss(1).png" width="300"/>
+  <img src="screenshots/ss(2).png" width="300"/>
+  <img src="screenshots/ss(3).png" width="300"/>
+  <img src="screenshots/ss(4).png" width="300"/>
+  <img src="screenshots/ss(5).png" width="300"/>
+  <img src="screenshots/ss(6).png" width="300"/>
+  <img src="screenshots/ss(7).png" width="300"/>
+  <img src="screenshots/ss(8).png" width="300"/>
+  <img src="screenshots/ss(9).png" width="300"/>
+  <img src="screenshots/ss(10).png" width="300"/>
+  <img src="screenshots/ss(11).png" width="300"/>
+  <img src="screenshots/ss(12).png" width="300"/>
+  <img src="screenshots/ss(13).png" width="300"/>
+</p>
 
 ## ✨ Features
 
@@ -83,54 +84,6 @@ lib/
 │   └── services.dart          # Service exports
 ├── firebase_options.dart      # Firebase configuration
 └── main.dart                  # App entry point
-```
-
-### Database Schema
-
-#### Users Collection
-```json
-{
-  "displayName": "John Doe",
-  "email": "john.doe@gmail.com",
-  "username": "john_rocks",
-  "createdAt": "timestamp",
-  "addresses": [
-    {
-      "street": "123 Oak Avenue",
-      "city": "New York",
-      "state": "NY",
-      "zipCode": "10001",
-      "paymentMethod": "UPI",
-      "isDefault": true
-    }
-  ]
-}
-```
-
-#### Orders Collection
-```json
-{
-  "userId": "user_id_123",
-  "deliveryAddress": {
-    "street": "123 Oak Avenue",
-    "city": "New York",
-    "state": "NY",
-    "zipCode": "10001"
-  },
-  "items": [
-    {
-      "productId": "prod_001",
-      "productName": "Sample Product",
-      "price": 29,
-      "quantity": 2
-    }
-  ],
-  "totalAmount": 58,
-  "paymentMethod": "UPI",
-  "status": "pending",
-  "orderDate": "timestamp",
-  "locationId": "downtown_store"
-}
 ```
 
 ## 🚀 Getting Started

@@ -42,32 +42,6 @@ A modern Flutter e-commerce application with Firebase integration, featuring Goo
 - **Orders Collection** with complete order tracking
 - **Security Rules** for data protection
 
-## 🏗️ Architecture
-
-### Project Structure
-```
-lib/
-├── models/
-│   ├── cart.dart              # Shopping cart management
-│   └── product.dart           # Product data model
-├── screens/
-│   ├── auth_screen.dart       # Authentication UI
-│   ├── auth_wrapper.dart      # Auth state management
-│   ├── checkout_screen.dart   # Checkout process
-│   ├── home_screen.dart       # Main dashboard
-│   ├── order_confirmation_screen.dart
-│   ├── product_list_screen.dart
-│   └── summary_screen.dart
-├── services/
-│   ├── auth_service.dart      # Firebase Authentication
-│   ├── firestore_service.dart # Database operations
-│   ├── location_service.dart  # Location/address services
-│   ├── payment_service.dart   # Payment processing
-│   └── services.dart          # Service exports
-├── firebase_options.dart      # Firebase configuration
-└── main.dart                  # App entry point
-```
-
 ## 📱 Screenshots
 
 ![](screenshots/ss1.png) 

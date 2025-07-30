@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/product.dart';
+import '../../models/product.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -35,12 +35,6 @@ class FirestoreService {
     required String paymentMethod,
   }) async {
     try {
-      print('🔥 FIRESTORE: Starting order creation...');
-      print('🔥 FIRESTORE: User ID: $userId');
-      print('🔥 FIRESTORE: Payment method: $paymentMethod');
-      print('🔥 FIRESTORE: Total amount: $totalAmount');
-      print('🔥 FIRESTORE: Items count: ${items.length}');
-      
       // Convert items to match your exact schema
       final orderItems = items.map((entry) => {
         'price': entry.key.price,
@@ -49,7 +43,6 @@ class FirestoreService {
         'quantity': entry.value,
       }).toList();
 
-      print('🔥 FIRESTORE: Order items formatted: $orderItems');
       final deliveryAddressFormatted = {
         'city': deliveryAddress['city'] ?? 'Unknown',
         'state': deliveryAddress['state'] ?? 'Unknown', 
@@ -57,7 +50,6 @@ class FirestoreService {
         'zipCode': deliveryAddress['zipCode'] ?? '00000',
       };
 
-      print('🔥 FIRESTORE: Delivery address formatted: $deliveryAddressFormatted');
       final orderData = {
         'deliveryAddress': deliveryAddressFormatted,
         'items': orderItems,
@@ -69,21 +61,10 @@ class FirestoreService {
         'userId': userId,
       };
 
-      print('🔥 FIRESTORE: Final order data: $orderData');
-      print('🔥 FIRESTORE: Attempting to write to Firestore orders collection...');
-      print('🔥 FIRESTORE: Using .add() method to create NEW DOCUMENT with AUTO-GENERATED ID');
       final orderRef = await _firestore.collection('orders').add(orderData);
-      
-      print('🔥 FIRESTORE: ✅ NEW ORDER DOCUMENT CREATED SUCCESSFULLY!');
-      print('🔥 FIRESTORE: 📄 NEW Document ID: ${orderRef.id}');
-      print('🔥 FIRESTORE: 📍 Document path: orders/${orderRef.id}');
-      print('🔥 FIRESTORE: 🎯 Check Firebase Console at: orders/${orderRef.id}');
       
       return orderRef.id;
     } catch (e) {
-      print('🔥 FIRESTORE: ❌ Error creating order: $e');
-      print('🔥 FIRESTORE: Error type: ${e.runtimeType}');
-      print('🔥 FIRESTORE: Stack trace: ${StackTrace.current}');
       rethrow;
     }
   }
@@ -107,10 +88,10 @@ class FirestoreService {
     required String zipCode,
     required String paymentMethod,
     bool isDefault = false,
+    String? landmark,
+    String? country,
   }) async {
     try {
-      print('Saving address for user: $userId');
-      
       final addressData = {
         'street': street,
         'city': city,
@@ -118,6 +99,11 @@ class FirestoreService {
         'zipCode': zipCode,
         'paymentMethod': paymentMethod,
         'isDefault': isDefault,
+        'landmark': landmark ?? '',
+        'country': country ?? 'India',
+        'mobile': mobile,
+        'name': name,
+        'updatedAt': FieldValue.serverTimestamp(),
       };
       final userDoc = await _firestore.collection('users').doc(userId).get();
       
@@ -137,14 +123,9 @@ class FirestoreService {
           await _firestore.collection('users').doc(userId).update({
             'addresses': FieldValue.arrayUnion([addressData]),
           });
-          
-          print('Address saved successfully: $addressData');
-        } else {
-          print('Address already exists, skipping save');
         }
       }
     } catch (e) {
-      print('Error saving user address: $e');
       rethrow;
     }
   }

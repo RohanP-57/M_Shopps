@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 import 'screens/checkout_screen.dart';
 import 'screens/home_screen.dart';
@@ -10,6 +11,17 @@ import 'services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  try {
+    await dotenv.load(fileName: ".env");
+    
+    if (dotenv.env['rzp_api'] == null || dotenv.env['rzp_api']!.isEmpty) {
+      dotenv.env['rzp_api'] = 'rzp_test_msmoBeDjsPwMS1';
+    }
+  } catch (e) {
+    dotenv.env['rzp_api'] = 'rzp_test_msmoBeDjsPwMS1';
+  }
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -18,6 +30,8 @@ void main() async {
   
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

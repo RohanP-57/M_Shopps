@@ -399,36 +399,17 @@ class SummaryScreen extends StatelessWidget {
               if (constraints.maxWidth < 400) {
                 return Column(
                   children: [
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        onPressed: () =>
-                            PaymentService.instance.showUPIPayment(
-                              context,
-                              name: name,
-                              mobile: mobile,
-                              address: address,
-                            ),
-                        icon: const Icon(Icons.payment, size: 18),
-                        label: const Text('UPI Payment'),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          backgroundColor: const Color(0xFF232F3E),
-                          foregroundColor: Colors.white,
+                        onPressed: () => PaymentService.instance.processPayment(
+                          context,
+                          paymentMethod: 'cod',
+                          name: name,
+                          mobile: mobile,
+                          address: address,
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () =>
-                            PaymentService.instance.showCODPayment(
-                              context,
-                              name: name,
-                              mobile: mobile,
-                              address: address,
-                            ),
                         icon: const Icon(Icons.money, size: 18),
                         label: const Text('Cash on Delivery'),
                         style: ElevatedButton.styleFrom(
@@ -442,13 +423,13 @@ class SummaryScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        onPressed: () =>
-                            PaymentService.instance.showRazorpayPayment(
-                              context,
-                              name: name,
-                              mobile: mobile,
-                              address: address,
-                            ),
+                        onPressed: () => PaymentService.instance.processPayment(
+                          context,
+                          paymentMethod: 'razorpay',
+                          name: name,
+                          mobile: mobile,
+                          address: address,
+                        ),
                         icon: const Icon(Icons.credit_card, size: 18),
                         label: const Text('Razorpay'),
                         style: ElevatedButton.styleFrom(
@@ -467,37 +448,17 @@ class SummaryScreen extends StatelessWidget {
                   child: Row(
 
                     children: [
+
                       Container(
                         constraints: const BoxConstraints(minWidth: 100),
                         child: ElevatedButton.icon(
-                          onPressed: () =>
-                              PaymentService.instance.showUPIPayment(
-                                context,
-                                name: name,
-                                mobile: mobile,
-                                address: address,
-                              ),
-                          icon: const Icon(Icons.payment, size: 16),
-                          label: const Text('UPI'),
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            backgroundColor: const Color(0xFF232F3E),
-                            foregroundColor: Colors.white,
+                          onPressed: () => PaymentService.instance.processPayment(
+                            context,
+                            paymentMethod: 'cod',
+                            name: name,
+                            mobile: mobile,
+                            address: address,
                           ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        constraints: const BoxConstraints(minWidth: 100),
-                        child: ElevatedButton.icon(
-                          onPressed: () =>
-                              PaymentService.instance.showCODPayment(
-                                context,
-                                name: name,
-                                mobile: mobile,
-                                address: address,
-                              ),
                           icon: const Icon(Icons.money, size: 16),
                           label: const Text('COD'),
                           style: ElevatedButton.styleFrom(
@@ -512,13 +473,13 @@ class SummaryScreen extends StatelessWidget {
                       Container(
                         constraints: const BoxConstraints(minWidth: 100),
                         child: ElevatedButton.icon(
-                          onPressed: () =>
-                              PaymentService.instance.showRazorpayPayment(
-                                context,
-                                name: name,
-                                mobile: mobile,
-                                address: address,
-                              ),
+                          onPressed: () => PaymentService.instance.processPayment(
+                            context,
+                            paymentMethod: 'razorpay',
+                            name: name,
+                            mobile: mobile,
+                            address: address,
+                          ),
                           icon: const Icon(Icons.credit_card, size: 16),
                           label: const Text('Razorpay'),
                           style: ElevatedButton.styleFrom(

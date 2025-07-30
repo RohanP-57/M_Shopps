@@ -52,3 +52,6 @@ ios/Runner/GoogleService-Info.plist
 # Firebase debug logs
 firebase-debug.log
 firestore-debug.log
+
+# Environment variables (contains API keys and secrets)
+.env

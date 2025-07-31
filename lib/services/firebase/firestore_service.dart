@@ -93,23 +93,22 @@ class FirestoreService {
   }) async {
     try {
       final addressData = {
-        'street': street,
         'city': city,
-        'state': state,
-        'zipCode': zipCode,
-        'paymentMethod': paymentMethod,
         'isDefault': isDefault,
         'landmark': landmark ?? '',
-        'country': country ?? 'India',
-        'mobile': mobile,
-        'name': name,
-        'updatedAt': FieldValue.serverTimestamp(),
+        'mobileNumber': mobile,
+        'paymentMethod': paymentMethod,
+        'state': state,
+        'street': street,
+        'zipCode': zipCode,
       };
+      
       final userDoc = await _firestore.collection('users').doc(userId).get();
       
       if (userDoc.exists) {
         final currentData = userDoc.data() as Map<String, dynamic>;
         final currentAddresses = List<Map<String, dynamic>>.from(currentData['addresses'] ?? []);
+        
         bool addressExists = currentAddresses.any((addr) => 
           addr['street'] == street && 
           addr['city'] == city && 
@@ -120,10 +119,18 @@ class FirestoreService {
           if (currentAddresses.isEmpty) {
             addressData['isDefault'] = true;
           }
+          
           await _firestore.collection('users').doc(userId).update({
             'addresses': FieldValue.arrayUnion([addressData]),
           });
         }
+      } else {
+        addressData['isDefault'] = true;
+        
+        await _firestore.collection('users').doc(userId).set({
+          'addresses': [addressData],
+          'createdAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
       }
     } catch (e) {
       rethrow;

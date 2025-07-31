@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
@@ -7,19 +8,25 @@ import 'screens/home_screen.dart';
 import 'screens/product_list_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/auth_wrapper.dart';
+import 'screens/address_selection_screen.dart';
+import 'screens/add_address_screen.dart';
 import 'services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  try {
-    await dotenv.load(fileName: ".env");
-    
-    if (dotenv.env['rzp_api'] == null || dotenv.env['rzp_api']!.isEmpty) {
+  if (kIsWeb) {
+    dotenv.env['rzp_api'] = 'rzp_test_msmoBeDjsPwMS1';
+  } else {
+    try {
+      await dotenv.load(fileName: ".env");
+      
+      if (dotenv.env['rzp_api'] == null || dotenv.env['rzp_api']!.isEmpty) {
+        dotenv.env['rzp_api'] = 'rzp_test_msmoBeDjsPwMS1';
+      }
+    } catch (e) {
       dotenv.env['rzp_api'] = 'rzp_test_msmoBeDjsPwMS1';
     }
-  } catch (e) {
-    dotenv.env['rzp_api'] = 'rzp_test_msmoBeDjsPwMS1';
   }
   
   await Firebase.initializeApp(

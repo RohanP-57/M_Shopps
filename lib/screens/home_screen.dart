@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        'Welcome to Mini_Shopping_app',
+                        'Welcome to M Shopps',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,

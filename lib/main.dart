@@ -8,8 +8,6 @@ import 'screens/home_screen.dart';
 import 'screens/product_list_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/auth_wrapper.dart';
-import 'screens/address_selection_screen.dart';
-import 'screens/add_address_screen.dart';
 import 'services/services.dart';
 
 void main() async {
